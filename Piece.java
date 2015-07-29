@@ -1,8 +1,8 @@
 class Piece {
 	private PieceName name;
-	private char colour;
+	private PieceColor colour;
 
-	public Piece(PieceName name, char colour) {
+	public Piece(PieceName name, PieceColor colour) {
 		this.name = name;
 		this.colour = colour;
 	}
@@ -11,13 +11,13 @@ class Piece {
 		return name;
 	}
 
-	public char getColour() {
+	public PieceColor getColour() {
 		return colour;
 	}
 
 	@Override
 	public String toString() {
-		return "Piece [name=" + name + ", colour=" + colour + "]";
+		return "Piece [name = " + name + ", color = " + colour + "]";
 	}
 
 }
