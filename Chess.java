@@ -38,8 +38,27 @@ class Chess {
 	}
 
 	private Piece preProcessDataPiece(String move, char playerColor) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		PieceName piece_name ;
+		PieceColor piece_color ;
+		
+		if (Character.isLowerCase(move[0])){
+			piece_name = Piece_name.P;
+		}
+		else {
+			piece_name = Piece_name.move[0];	
+		}
+		
+		if (playerColor == 'W'){
+			piece_color = PieceColor.W;
+		}
+		else {
+			piece_color = PieceColor.B;
+		}
+		
+		Piece piece = new Piece(piece_name,piece_color);
+		
+		return piece;
 	}
 
 	private int preProcessDataRow(String move) {
