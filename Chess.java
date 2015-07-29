@@ -157,7 +157,13 @@ class Chess {
 	private int preProcessDataColPositionIndex(String move) {
 
 		int colPosition = -1;
-		char colPositionChar = move.charAt(1);
+		char colPositionChar;
+		if(Character.isLowerCase(move.charAt(0)){
+			colPositionChar = move.charAt(0);
+		}
+		else{
+			colPositionChar = move.charAt(1);
+		}
 		if (move.length() == 4) {
 			if (charInRange(colPositionChar, 'a', 'h')) {
 				colPosition = colPositionChar - 'a';
@@ -221,6 +227,7 @@ class Chess {
 		case N:
 			break;
 		case P:
+			locateRemovePawn(piece, row, col, rowPositionIndex, colPositionIndex);
 			break;
 		}
 	}
