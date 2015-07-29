@@ -102,10 +102,16 @@ class Chess {
 		// call locateRemoveMovingPiece
 	}
 
+
+	private int preProcessDataCol(String move, char playerColor) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	private int preProcessDataRow(String move, char playerColor) {
 		
 		int rowIndex; 
-		lastChar = move.substring(move.length() - 1));
+		char lastChar = move.charAt(move.length() - 1);
 		if (lastChar == 'O' && playerColor == 'B'){
 			rowIndex = 8;
 		}
@@ -116,11 +122,6 @@ class Chess {
 			rowIndex = Character.getNumericValue(lastChar);
 		}
 		return rowIndex;
-	}
-
-	private int preProcessDataCol(String move) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	private int preProcessDataColPositionIndex(String move) {
@@ -164,11 +165,11 @@ class Chess {
 
 	private void putPiece(Piece piece, int row, int col) {
 		grid[row][col] = new Cell(piece);
-		if (condition) {
-			
-		} else {
-
-		}
+//		if (condition) {
+//			
+//		} else {
+//
+//		}
 
 	}
 
