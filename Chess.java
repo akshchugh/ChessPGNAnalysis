@@ -3,13 +3,13 @@ import java.util.Map;
 
 class Chess {
 	private Cell[][] grid;
-	private Map<PieceName, String> whitePiecePositions;
-	private Map<PieceName, String> blackPiecePositions;
+	private Map<String, String> whitePiecePositions;
+	private Map<String, String> blackPiecePositions;
 
 	public Chess() {
 		this.grid = new Cell[8][8];
-		this.whitePiecePositions = new HashMap<PieceName, String>();
-		this.blackPiecePositions = new HashMap<PieceName, String>();
+		this.whitePiecePositions = new HashMap<String, String>();
+		this.blackPiecePositions = new HashMap<String, String>();
 		initializeGrid();
 	}
 
@@ -147,6 +147,11 @@ class Chess {
 
 	private void putPiece(Piece piece, int row, int col) {
 		grid[row][col] = new Cell(piece);
+		if (condition) {
+			
+		} else {
+
+		}
 
 	}
 
@@ -181,6 +186,7 @@ class Chess {
 		removePiece(delRow, delCol);
 	}
 
+		
 	private void locateRemoveKing() {
 		// TODO Auto-generated method stub
 
