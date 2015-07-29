@@ -91,14 +91,31 @@ class Chess {
 	}
 
 	public void nextMove(String move, char playerColor) {
-		int row = preProcessDataRow(move);
-		int col = preProcessDataCol(move);
+		
+		int row = preProcessDataRow(move, playerColor);
+		int col = preProcessDataCol(move, playerColor);
 		Piece piece = preProcessDataPiece(move, playerColor);
 		int rowPositionIndex = preProcessDataRowPositionIndex(move);
 		int colPositionIndex = preProcessDataColPositionIndex(move);
-
+		
 		// call putPiece
 		// call locateRemoveMovingPiece
+	}
+
+	private int preProcessDataRow(String move, char playerColor) {
+		
+		int rowIndex; 
+		lastChar = move.substring(move.length() - 1));
+		if (lastChar == 'O' && playerColor == 'B'){
+			rowIndex = 8;
+		}
+		else if (lastChar == 'O' && playerColor == 'W'){
+			rowIndex = 1;
+		}
+		else {
+			rowIndex = Character.getNumericValue(lastChar);
+		}
+		return rowIndex;
 	}
 
 	private int preProcessDataCol(String move) {
