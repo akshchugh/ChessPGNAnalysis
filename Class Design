@@ -1,9 +1,13 @@
 We use three classes
 
 Piece
-	name
-	colour
-Chess 
-	has a grid of cells [8x8]
+	char name
+	char colour
 Cell
-	Piece object
+	Piece piece
+Chess 
+	Cell[][] grid
+	initializeGrid()
+	maketMove(move_details, player)
+	updatePosition(move_details, player)
+	deletePreviousPosition(move_details, player)
