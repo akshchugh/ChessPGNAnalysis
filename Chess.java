@@ -91,7 +91,7 @@ class Chess {
 	public void nextMove(String move, char playerColor) {
 
 		int row = preProcessDataRow(move, playerColor);
-		int col = preProcessDataCol(move, playerColor);
+		int col = preProcessDataCol(move);
 		Piece piece = preProcessDataPiece(move, playerColor);
 		int rowPositionIndex = preProcessDataRowPositionIndex(move);
 		int colPositionIndex = preProcessDataColPositionIndex(move);
@@ -100,9 +100,23 @@ class Chess {
 		// call locateRemoveMovingPiece
 	}
 
-	private int preProcessDataCol(String move, char playerColor) {
-		// TODO Auto-generated method stub
-		return 0;
+	private int preProcessDataCol(String move) {
+	
+		int columnIndex = 0; 
+		char lastChar = move.charAt(move.length() - 1);
+		char columnChar = move.charAt(move.length() - 2);
+		if (lastChar == 'O'){
+			if (move.length() == 3){
+				columnIndex = 6;
+			}
+			else if (move.length() == 5){
+				columnIndex = 2;
+			}
+		}
+		else {
+			columnIndex = columnChar - 'a';
+		}
+		return columnIndex;
 	}
 
 	private int preProcessDataRow(String move, char playerColor) {
