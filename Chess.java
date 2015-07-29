@@ -113,11 +113,13 @@ class Chess {
 		Piece piece = preProcessDataPiece(move, playerColor);
 		int rowPositionIndex = preProcessDataRowPositionIndex(move);
 		int colPositionIndex = preProcessDataColPositionIndex(move);
+		boolean isCaptured = preProcessDataCapture(move);
+		
 		putPiece(piece, row, col);
 		locateRemoveMovingPiece(piece, row, col, rowPositionIndex, colPositionIndex);
 		// call locateRemoveMovingPiece
 	}
-
+	
 	private int preProcessDataCol(String move) {
 		int columnIndex = 0;
 
@@ -194,6 +196,14 @@ class Chess {
 		return piece;
 	}
 
+	private boolean preProcessDataCapture(move){
+		
+		if(move.charAt(1) == 'x'){
+			return true;
+		}
+		return false;
+	}
+	
 	private void putPiece(Piece piece, int row, int col) {
 		grid[row][col] = new Cell(piece);
 	}
