@@ -149,9 +149,21 @@ class Chess {
 		return rowIndex;
 	}
 
+	private boolean charInRange( char toCheck, char min, char max )
+	{
+		return ( toCheck >= min && toCheck <= max );
+	}
+	
 	private int preProcessDataColPositionIndex(String move) {
 		// return -1 if not applicable
-		return 0;
+		int rowPosition = -1;
+		char rowPositionChar = move.charAt(1);
+		if (move.length() == 4){
+			if( charInRange( rowPositionChar, 'a', 'h' )){
+				rowPosition = rowPositionChar - 'a'; 
+			}
+		}
+		return rowPosition;
 	}
 
 	private int preProcessDataRowPositionIndex(String move) {
