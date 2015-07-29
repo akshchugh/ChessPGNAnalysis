@@ -1,15 +1,22 @@
+import java.util.HashMap;
+import java.util.Map;
+
 class Chess {
 	private Cell[][] grid;
+	private Map<PieceName, String> whitePiecePositions;
+	private Map<PieceName, String> blackPiecePositions;
 
 	public Chess() {
 		this.grid = new Cell[8][8];
+		this.whitePiecePositions = new HashMap<PieceName, String>();
+		this.blackPiecePositions = new HashMap<PieceName, String>();
 		initializeGrid();
 	}
 
 	private void initializeGrid() {
+		Piece pawn = new Piece(PieceName.P, PieceColor.B);
 		Piece pieceObject;
 		Cell cell;
-
 		for(int i=0;i<8;i++) {
 			pieceObject=new Piece(PieceName.P,PieceColor.W);
 			cell= new Cell(pieceObject);
@@ -131,11 +138,11 @@ class Chess {
 		PieceName piece_name ;
 		PieceColor piece_color ;
 		
-		if (Character.isLowerCase(move[0])){
+		if (Character.isLowerCase(move.charAt(0))){
 			piece_name = PieceName.P;
 		}
 		else {
-			piece_name = PieceName.move[0];	
+			piece_name = PieceName.valueOf(move.charAt(0)+"");	
 		}
 		
 		if (playerColor == 'W'){
@@ -161,8 +168,39 @@ class Chess {
 	}
 
 	private void locateRemoveMovingPiece(Piece piece, int row, int col, int rowPositionIndex, int colPositionIndex) {
+		switch (piece.getName()) {
+		case K:
+			locateRemoveKing(piece, row, col);
+			break;
+		case Q:
+			break;
+		case R:
+			break;
+		case B:
+			break;
+		case N:
+			break;
+		case P:
+			break;
+		}
+	}
+
+	private void locateRemoveKing(Piece piece, int row, int col) {
+		String position;
+		if (piece.getColor().equals(PieceColor.W)) {
+			position = whitePiecePositions.get(piece.getName());
+		} else {
+			position = blackPiecePositions.get(piece.getName());
+		}
+		String[] s = position.split(" ");
+		int delRow = Integer.parseInt(s[0]);
+		int delCol = Integer.parseInt(s[1]);
+		removePiece(delRow, delCol);
+	}
+
+	private void locateRemoveKing() {
 		// TODO Auto-generated method stub
-		// call removePiece
+
 	}
 
 	private void removePiece(int row, int col) {
@@ -172,11 +210,11 @@ class Chess {
 	public void displayBoard() {
 		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid.length; j++) {
-				System.out.print(grid[i][j]+" ");
+				System.out.print(grid[i][j].getPiece() + " ");
 			}
 			System.out.println();
 		}
-		
+
 	}
 
 }
