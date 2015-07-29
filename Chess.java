@@ -226,11 +226,69 @@ class Chess {
 			locateRemoveBishop(piece, row, col, rowPositionIndex, colPositionIndex);
 			break;
 		case N:
+			locateRemoveKnight(piece, row, col, rowPositionIndex, colPositionIndex);
 			break;
 		case P:
-			//locateRemovePawn(piece, row, col, rowPositionIndex, colPositionIndex);
+			// locateRemovePawn(piece, row, col, rowPositionIndex,
+			// colPositionIndex);
 			break;
 		}
+	}
+
+	private void locateRemoveKnight(Piece piece, int row, int col, int rowPositionIndex, int colPositionIndex) {
+		String position1;
+		String position2;
+		if (piece.getColor().equals(PieceColor.W)) {
+			position1 = whitePiecePositions.get(piece.getName().toString() + " " + 1);
+			position2 = whitePiecePositions.get(piece.getName().toString() + " " + 2);
+		} else {
+			position1 = blackPiecePositions.get(piece.getName().toString() + " " + 1);
+			position2 = blackPiecePositions.get(piece.getName().toString() + " " + 2);
+		}
+		String[] s = position1.split(" ");
+		int delRow1 = Integer.parseInt(s[0]);
+		int delCol1 = Integer.parseInt(s[1]);
+		s = position2.split(" ");
+		int delRow2 = Integer.parseInt(s[0]);
+		int delCol2 = Integer.parseInt(s[1]);
+		int delRow = 0;
+		int delCol = 0;
+		if (rowPositionIndex != -1) {
+			delRow = rowPositionIndex == delRow1 ? delRow1 : delRow2;
+			delCol = rowPositionIndex == delRow1 ? delCol1 : delCol2;
+			removePiece(delRow, delCol);
+			return;
+		}
+		if (colPositionIndex != -1) {
+			delRow = colPositionIndex == delCol1 ? delRow1 : delRow2;
+			delCol = colPositionIndex == delCol1 ? delCol1 : delCol2;
+			removePiece(delRow, delCol);
+			return;
+		}
+		boolean knight1Selected = isPossibleKnightMove(row, col, delRow1, delCol1);
+		delRow = knight1Selected ? delRow1 : delRow2;
+		delCol = knight1Selected ? delCol1 : delCol2;
+		String key = piece.getName().toString();
+		key += " " + (knight1Selected ? 1 : 2);
+		if (piece.getColor().equals(PieceColor.W)) {
+			whitePiecePositions.put(key, row + " " + col);
+		} else {
+			blackPiecePositions.put(key, row + " " + col);
+		}
+		removePiece(delRow, delCol);
+	}
+
+	private boolean isPossibleKnightMove(int row, int col, int delRow1, int delCol1) {
+		int[][] possiblePossitions = { { delRow1 + 1, delCol1 }, { delRow1 + 2, delCol1 }, { delRow1 - 1, delCol1 },
+				{ delRow1 - 2, delCol1 }, { delRow1 + 1, delCol1 + 2 }, { delRow1 + 1, delCol1 - 2 },
+				{ delRow1 - 1, delCol1 + 2 }, { delRow1 - 1, delCol1 - 2 }, { delRow1 + 2, delCol1 + 1 },
+				{ delRow1 + 2, delCol1 - 1 }, { delRow1 - 2, delCol1 + 1 }, { delRow1 - 2, delCol1 - 1 } };
+		for (int i = 0; i < possiblePossitions.length; i++) {
+			if (possiblePossitions[i][0] == row && possiblePossitions[i][1] == col) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private void locateRemoveBishop(Piece piece, int row, int col, int rowPositionIndex, int colPositionIndex) {
@@ -275,13 +333,9 @@ class Chess {
 		if (piece.getColor().equals(PieceColor.W)) {
 			position1 = whitePiecePositions.get(piece.getName().toString() + " " + 1);
 			position2 = whitePiecePositions.get(piece.getName().toString() + " " + 2);
-			// whitePiecePositions.put(piece.getName().toString(), row + " " +
-			// col);
 		} else {
 			position1 = blackPiecePositions.get(piece.getName().toString() + " " + 1);
 			position2 = blackPiecePositions.get(piece.getName().toString() + " " + 2);
-			// blackPiecePositions.put(piece.getName().toString(), row + " " +
-			// col);
 		}
 		String[] s = position1.split(" ");
 		int delRow1 = Integer.parseInt(s[0]);
