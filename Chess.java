@@ -149,18 +149,17 @@ class Chess {
 		return rowIndex;
 	}
 
-	private boolean charInRange( char toCheck, char min, char max )
-	{
+	private boolean charInRange( char toCheck, char min, char max ){
 		return ( toCheck >= min && toCheck <= max );
 	}
 	
 	private int preProcessDataColPositionIndex(String move) {
 		// return -1 if not applicable
-		int rowPosition = -1;
-		char rowPositionChar = move.charAt(1);
+		int colPosition = -1;
+		char colPositionChar = move.charAt(1);
 		if (move.length() == 4){
-			if( charInRange( rowPositionChar, 'a', 'h' )){
-				rowPosition = rowPositionChar - 'a'; 
+			if( charInRange( colPositionChar, 'a', 'h' )){
+				colPosition = colPositionChar - 'a'; 
 			}
 		}
 		return rowPosition;
@@ -187,11 +186,6 @@ class Chess {
 		}
 		Piece piece = new Piece(piece_name, piece_color);
 		return piece;
-	}
-
-	private int preProcessDataRow(String move) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 	private void putPiece(Piece piece, int row, int col) {
