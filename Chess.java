@@ -215,12 +215,51 @@ class Chess {
 			locateRemoveRook(piece, row, col, rowPositionIndex, colPositionIndex);
 			break;
 		case B:
+			locateRemoveBishop(piece, row, col, rowPositionIndex, colPositionIndex);
 			break;
 		case N:
 			break;
 		case P:
 			break;
 		}
+	}
+	private void locateRemoveBishop(Piece piece, int row, int col,int rowPositionIndex,int colPositionIndex) {
+		String position1, position2;
+		String [] s1,s2;
+		int delRow=0,delCol=0;
+		if( row== -1 && col == -1){
+			if (piece.getColor().equals(PieceColor.W)) {
+				position1 = whitePiecePositions.get(piece.getName().toString())+ " 1";
+				position2 = whitePiecePositions.get(piece.getName().toString())+ " 2";
+				s1 = position1.split(" ");
+				if(Math.abs(Integer.parseInt(s1[0])-row) == Math.abs(Integer.parseInt(s1[1])-col)) {
+					delRow = Integer.parseInt(s1[0]);
+					delCol = Integer.parseInt(s1[1]);
+					
+				}
+				else {
+					s2 = position2.split(" ");
+					delRow = Integer.parseInt(s2[0]);
+					delCol = Integer.parseInt(s2[1]);
+				}
+			}
+			else {
+				position1 = blackPiecePositions.get(piece.getName().toString())+ " 1";
+				position2 = blackPiecePositions.get(piece.getName().toString())+ " 2";
+				s1 = position1.split(" ");
+				if(Math.abs(Integer.parseInt(s1[0])-row) == Math.abs(Integer.parseInt(s1[1])-col)) {
+					delRow = Integer.parseInt(s1[0]);
+					delCol = Integer.parseInt(s1[1]);
+					
+				}
+				else {
+					s2 = position2.split(" ");
+					delRow = Integer.parseInt(s2[0]);
+					delCol = Integer.parseInt(s2[1]);
+				}
+			}
+		}
+		removePiece(delRow,delCol);		
 	}
 
 	private void locateRemoveRook(Piece piece, int row, int col, int rowPositionIndex, int colPositionIndex) {
