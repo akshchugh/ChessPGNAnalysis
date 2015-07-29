@@ -21,6 +21,7 @@ class Chess {
 			pieceObject=new Piece(PieceName.P,PieceColor.W);
 			cell= new Cell(pieceObject);
 			grid[1][i]=cell;
+
 		}
 		for(int i=0;i<8;i++) {
 			pieceObject=new Piece(PieceName.P,PieceColor.B);
@@ -36,68 +37,84 @@ class Chess {
 		pieceObject=new Piece(PieceName.R,PieceColor.W);
 		cell= new Cell(pieceObject);
 		grid[0][0]=cell;
+		whitePiecePositions.put(pieceObject.getName().toString() +" 1", "0 0");
 		pieceObject=new Piece(PieceName.R,PieceColor.W);
 		cell= new Cell(pieceObject);
 		grid[0][7]=cell;
+		whitePiecePositions.put(pieceObject.getName().toString() +" 2", "0 7");
 		pieceObject=new Piece(PieceName.R,PieceColor.B);
 		cell= new Cell(pieceObject);
 		grid[7][0]=cell;
+		blackPiecePositions.put(pieceObject.getName().toString() +" 1", "7 0");
 		pieceObject=new Piece(PieceName.R,PieceColor.B);
 		cell= new Cell(pieceObject);
 		grid[7][7]=cell;
-		
+		blackPiecePositions.put(pieceObject.getName().toString() +" 2", "7 7");
+
 		pieceObject=new Piece(PieceName.N,PieceColor.W);
 		cell= new Cell(pieceObject);
 		grid[0][1]=cell;
+		whitePiecePositions.put(pieceObject.getName().toString() +" 1", "0 1");
 		pieceObject=new Piece(PieceName.N,PieceColor.W);
 		cell= new Cell(pieceObject);
 		grid[0][6]=cell;
+		whitePiecePositions.put(pieceObject.getName().toString() +" 2", "0 6");
 		pieceObject=new Piece(PieceName.N,PieceColor.B);
 		cell= new Cell(pieceObject);
 		grid[7][1]=cell;
+		blackPiecePositions.put(pieceObject.getName().toString() +" 1", "7 1");
 		pieceObject=new Piece(PieceName.N,PieceColor.B);
 		cell= new Cell(pieceObject);
 		grid[7][6]=cell;
-		
+		blackPiecePositions.put(pieceObject.getName().toString() +" 2", "7 6");
+
 		pieceObject=new Piece(PieceName.B,PieceColor.W);
 		cell= new Cell(pieceObject);
 		grid[0][2]=cell;
+		whitePiecePositions.put(pieceObject.getName().toString() +" 1", "0 2");
 		pieceObject=new Piece(PieceName.B,PieceColor.W);
 		cell= new Cell(pieceObject);
 		grid[0][5]=cell;
+		whitePiecePositions.put(pieceObject.getName().toString() +" 2", "0 5");
 		pieceObject=new Piece(PieceName.B,PieceColor.B);
 		cell= new Cell(pieceObject);
 		grid[7][2]=cell;
+		blackPiecePositions.put(pieceObject.getName().toString() +" 1", "7 2");
 		pieceObject=new Piece(PieceName.B,PieceColor.B);
 		cell= new Cell(pieceObject);
 		grid[7][5]=cell;
-		
+		blackPiecePositions.put(pieceObject.getName().toString() +" 2", "7 5");
+
 		pieceObject=new Piece(PieceName.Q,PieceColor.W);
 		cell= new Cell(pieceObject);
 		grid[0][3]=cell;
+		whitePiecePositions.put(pieceObject.getName().toString() , "0 3");
 		pieceObject=new Piece(PieceName.Q,PieceColor.B);
 		cell= new Cell(pieceObject);
 		grid[7][3]=cell;
-		
+		blackPiecePositions.put(pieceObject.getName().toString() , "7 3");
+
 		pieceObject=new Piece(PieceName.K,PieceColor.W);
 		cell= new Cell(pieceObject);
 		grid[0][4]=cell;
+		whitePiecePositions.put(pieceObject.getName().toString() , "0 4");
 		pieceObject=new Piece(PieceName.K,PieceColor.B);
 		cell= new Cell(pieceObject);
 		grid[7][4]=cell;
-		
-		
-		
+		blackPiecePositions.put(pieceObject.getName().toString() , "7 4");
+
+
+
 	}
 
 	public void nextMove(String move, char playerColor) {
-		
+
 		int row = preProcessDataRow(move, playerColor);
 		int col = preProcessDataCol(move, playerColor);
 		Piece piece = preProcessDataPiece(move, playerColor);
 		int rowPositionIndex = preProcessDataRowPositionIndex(move);
 		int colPositionIndex = preProcessDataColPositionIndex(move);
-		
+
 		// call putPiece
 		// call locateRemoveMovingPiece
 	}
@@ -109,7 +126,7 @@ class Chess {
 	}
 
 	private int preProcessDataRow(String move, char playerColor) {
-		
+
 		int rowIndex; 
 		char lastChar = move.charAt(move.length() - 1);
 		if (lastChar == 'O' && playerColor == 'B'){
@@ -135,26 +152,26 @@ class Chess {
 	}
 
 	private Piece preProcessDataPiece(String move, char playerColor) {
-		
+
 		PieceName piece_name ;
 		PieceColor piece_color ;
-		
+
 		if (Character.isLowerCase(move.charAt(0))){
 			piece_name = PieceName.P;
 		}
 		else {
 			piece_name = PieceName.valueOf(move.charAt(0)+"");	
 		}
-		
+
 		if (playerColor == 'W'){
 			piece_color = PieceColor.W;
 		}
 		else {
 			piece_color = PieceColor.B;
 		}
-		
+
 		Piece piece = new Piece(piece_name,piece_color);
-		
+
 		return piece;
 	}
 
@@ -165,11 +182,11 @@ class Chess {
 
 	private void putPiece(Piece piece, int row, int col) {
 		grid[row][col] = new Cell(piece);
-//		if (condition) {
-//			
-//		} else {
-//
-//		}
+		//		if (condition) {
+		//			
+		//		} else {
+		//
+		//		}
 
 	}
 
@@ -204,7 +221,7 @@ class Chess {
 		removePiece(delRow, delCol);
 	}
 
-		
+
 	private void locateRemoveKing() {
 		// TODO Auto-generated method stub
 
