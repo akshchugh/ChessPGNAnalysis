@@ -48,7 +48,7 @@ class Chess {
 	}
 
 	private void putPiece(Piece piece, int row, int col) {
-		// TODO Auto-generated method stub
+		grid[row][col] = new Cell(piece);
 
 	}
 
