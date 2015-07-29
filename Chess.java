@@ -174,6 +174,9 @@ class Chess {
 	private int preProcessDataRowPositionIndex(String move) {
 		int rowPosition = -1;
 		if (move.length() == 4) {
+			if (move.charAt(1) == 'x' && Character.isDigit(move.charAt(0))) {
+				rowPosition = Character.getNumericValue(move.charAt(0)) - 1;
+			}
 			if (Character.isDigit(move.charAt(1))) {
 				rowPosition = Character.getNumericValue(move.charAt(1)) - 1;
 			}
