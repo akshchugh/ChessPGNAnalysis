@@ -223,18 +223,52 @@ class Chess {
 			break;
 		}
 	}
+	private boolean isPossibleBishopMove(int newrow, int newcol, int oldrow , int oldcol) {
+		if(Math.abs(newrow-oldrow) != Math.abs(newcol-oldcol)) {
+			return false;
+		}
+		else {
+			if(newrow>oldrow && newcol>oldcol) {
+				for(int i=1;i<=(newrow-oldrow);i++) {
+					if(grid[oldrow+i][oldcol+i]!=null)
+						return false;
+				}
+					
+			}
+			else if (newrow>oldrow && newcol<oldcol) {
+				for(int i=1;i<=(newrow-oldrow);i++) {
+					if(grid[oldrow+i][oldcol-i]!=null)
+						return false;
+				}
+			}
+			else if (newrow<oldrow && newcol>oldcol) {
+				for(int i=1;i<=(newcol-oldcol);i++) {
+					if(grid[oldrow-i][oldcol+i]!=null)
+						return false;
+				}
+			}
+			else {
+				for(int i=1;i<=(oldcol-newcol);i++) {
+					if(grid[oldrow-i][oldcol-i]!=null)
+						return false;
+				}
+			}	
+		}
+		return true;
+	}
 	private void locateRemoveBishop(Piece piece, int row, int col,int rowPositionIndex,int colPositionIndex) {
-		String position1, position2;
+		String position1="", position2="";
 		String [] s1,s2;
 		int delRow=0,delCol=0;
-		if( row== -1 && col == -1){
+		if( rowPositionIndex == -1 && colPositionIndex == -1){
 			if (piece.getColor().equals(PieceColor.W)) {
 				position1 = whitePiecePositions.get(piece.getName().toString())+ " 1";
 				position2 = whitePiecePositions.get(piece.getName().toString())+ " 2";
 				s1 = position1.split(" ");
-				if(Math.abs(Integer.parseInt(s1[0])-row) == Math.abs(Integer.parseInt(s1[1])-col)) {
-					delRow = Integer.parseInt(s1[0]);
+				if(isPossibleBishopMove(row,col,Integer.parseInt(s1[0]),Integer.parseInt(s1[1]))) {
+				    delRow = Integer.parseInt(s1[0]);
 					delCol = Integer.parseInt(s1[1]);
+					
 					
 				}
 				else {
@@ -258,6 +292,24 @@ class Chess {
 					delCol = Integer.parseInt(s2[1]);
 				}
 			}
+		}
+		String s3 [] = position1.split(" ");
+		int delRow1 = Integer.parseInt(s3[0]);
+		int delCol1 = Integer.parseInt(s3[1]);
+		s3 = position2.split(" ");
+		int delRow2 = Integer.parseInt(s3[0]);
+		int delCol2 = Integer.parseInt(s3[1]);
+		if (rowPositionIndex != -1) {
+			delRow = rowPositionIndex == delRow1 ? delRow1 : delRow2;
+			delCol = rowPositionIndex == delRow1 ? delCol1 : delCol2;
+			removePiece(delRow, delCol);
+			return;
+		}
+		if (colPositionIndex != -1) {
+			delRow = colPositionIndex == delCol1 ? delRow1 : delRow2;
+			delCol = colPositionIndex == delCol1 ? delCol1 : delCol2;
+			removePiece(delRow, delCol);
+			return;
 		}
 		removePiece(delRow,delCol);		
 	}
