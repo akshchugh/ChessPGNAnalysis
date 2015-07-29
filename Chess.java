@@ -162,7 +162,7 @@ class Chess {
 				colPosition = colPositionChar - 'a'; 
 			}
 		}
-		return rowPosition;
+		return colPosition;
 	}
 
 	private int preProcessDataRowPositionIndex(String move) {
