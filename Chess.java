@@ -104,7 +104,8 @@ class Chess {
 
 
 	private int preProcessDataCol(String move, char playerColor) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method st
+		ub
 		return 0;
 	}
 
@@ -113,13 +114,13 @@ class Chess {
 		int rowIndex; 
 		char lastChar = move.charAt(move.length() - 1);
 		if (lastChar == 'O' && playerColor == 'B'){
-			rowIndex = 8;
+			rowIndex = 7;
 		}
 		else if (lastChar == 'O' && playerColor == 'W'){
-			rowIndex = 1;
+			rowIndex = 0;
 		}
 		else {
-			rowIndex = Character.getNumericValue(lastChar);
+			rowIndex = Character.getNumericValue(lastChar) - 1;
 		}
 		return rowIndex;
 	}
