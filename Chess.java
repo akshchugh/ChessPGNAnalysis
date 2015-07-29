@@ -122,7 +122,7 @@ class Chess {
 
 	private int preProcessDataCol(String move) {
 	
-		int columnIndex; 
+		int columnIndex = 0; 
 		char lastChar = move.charAt(move.length() - 1);
 		char columnChar = move.charAt(move.length() - 2);
 		if (lastChar == 'O'){
@@ -222,7 +222,9 @@ class Chess {
 			break;
 		}
 	}
-
+	private void locateRemoveBishop(Piece piece, int row, int col) {
+		
+	}
 	private void locateRemoveKing(Piece piece, int row, int col) {
 		String position;
 		if (piece.getColor().equals(PieceColor.W)) {
@@ -236,11 +238,6 @@ class Chess {
 		removePiece(delRow, delCol);
 	}
 
-
-	private void locateRemoveKing() {
-		// TODO Auto-generated method stub
-
-	}
 
 	private void removePiece(int row, int col) {
 		grid[row][col].setPiece(null);
