@@ -116,12 +116,11 @@ class Chess {
 		boolean isCaptured = preProcessDataCapture(move);
 
 		putPiece(piece, row, col);
-		locateRemoveMovingPiece(piece, row, col, rowPositionIndex, colPositionIndex,isCaptured);
+		locateRemoveMovingPiece(piece, row, col, rowPositionIndex, colPositionIndex, isCaptured);
 	}
 
 	private int preProcessDataCol(String move) {
 		int columnIndex = 0;
-
 		char lastChar = move.charAt(move.length() - 1);
 		char columnChar = move.charAt(move.length() - 2);
 		if (lastChar == 'O') {
@@ -167,7 +166,6 @@ class Chess {
 	}
 
 	private int preProcessDataRowPositionIndex(String move) {
-
 		int rowPosition = -1;
 		if (move.length() == 4) {
 			if (Character.isDigit(move.charAt(1))) {
@@ -195,8 +193,8 @@ class Chess {
 		return piece;
 	}
 
-	private boolean preProcessDataCapture(String move){
-		if(move.charAt(1) == 'x'){
+	private boolean preProcessDataCapture(String move) {
+		if (move.charAt(1) == 'x') {
 			return true;
 		}
 		return false;
@@ -259,16 +257,44 @@ class Chess {
 			removePiece(delRow, delCol);
 			return;
 		}
-		if (delRow1 == delRow2 || delCol1 == delCol2) {
-
+		boolean rook1Selected = isPossibleRookMove(row, col, delRow1, delCol1);
+		delRow = rook1Selected ? delRow1 : delRow2;
+		delCol = rook1Selected ? delCol1 : delCol2;
+		String key = piece.getName().toString();
+		key += " " + (rook1Selected ? 1 : 2);
+		if (piece.getColor().equals(PieceColor.W)) {
+			whitePiecePositions.put(key, row + " " + col);
 		} else {
-
+			blackPiecePositions.put(key, row + " " + col);
 		}
 
 		removePiece(delRow, delCol);
 	}
 
-	
+	private boolean isPossibleRookMove(int row, int col, int delRow1, int delCol1) {
+		if (row == delRow1) {
+			int colIndex = delCol1 < col ? delCol1 : col;
+			int len = delCol1 < col ? col : delCol1;
+			for (; colIndex < len; colIndex++) {
+				if (grid[row][colIndex].getPiece() != null) {
+					return false;
+				}
+			}
+			return true;
+		}
+		if (col == delCol1) {
+			int rowIndex = delRow1 < row ? delRow1 : row;
+			int len = delRow1 < row ? row : delRow1;
+			for (; rowIndex < len; rowIndex++) {
+				if (grid[rowIndex][col].getPiece() != null) {
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
 	private void locateRemoveKingOrQueen(Piece piece, int row, int col) {
 		String position;
 		if (piece.getColor().equals(PieceColor.W)) {
