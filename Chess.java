@@ -113,14 +113,14 @@ class Chess {
 		Piece piece = preProcessDataPiece(move, playerColor);
 		int rowPositionIndex = preProcessDataRowPositionIndex(move);
 		int colPositionIndex = preProcessDataColPositionIndex(move);
+		boolean isCaptured = preProcessDataCapture(move);
+
 		putPiece(piece, row, col);
-		locateRemoveMovingPiece(piece, row, col, rowPositionIndex, colPositionIndex);
-		// call locateRemoveMovingPiece
+		locateRemoveMovingPiece(piece, row, col, rowPositionIndex, colPositionIndex,isCaptured);
 	}
 
 	private int preProcessDataCol(String move) {
 		int columnIndex = 0;
-
 		char lastChar = move.charAt(move.length() - 1);
 		char columnChar = move.charAt(move.length() - 2);
 		if (lastChar == 'O') {
@@ -149,25 +149,30 @@ class Chess {
 		return rowIndex;
 	}
 
-	private boolean charInRange( char toCheck, char min, char max ){
-		return ( toCheck >= min && toCheck <= max );
+	private boolean charInRange(char toCheck, char min, char max) {
+		return (toCheck >= min && toCheck <= max);
 	}
-	
+
 	private int preProcessDataColPositionIndex(String move) {
-		// return -1 if not applicable
+
 		int colPosition = -1;
 		char colPositionChar = move.charAt(1);
-		if (move.length() == 4){
-			if( charInRange( colPositionChar, 'a', 'h' )){
-				colPosition = colPositionChar - 'a'; 
+		if (move.length() == 4) {
+			if (charInRange(colPositionChar, 'a', 'h')) {
+				colPosition = colPositionChar - 'a';
 			}
 		}
 		return colPosition;
 	}
 
 	private int preProcessDataRowPositionIndex(String move) {
-		// return -1 if not applicable
-		return 0;
+		int rowPosition = -1;
+		if (move.length() == 4) {
+			if (Character.isDigit(move.charAt(1))) {
+				rowPosition = Character.getNumericValue(move.charAt(1)) - 1;
+			}
+		}
+		return rowPosition;
 	}
 
 	private Piece preProcessDataPiece(String move, char playerColor) {
@@ -188,22 +193,28 @@ class Chess {
 		return piece;
 	}
 
+	private boolean preProcessDataCapture(String move){
+		if(move.charAt(1) == 'x'){
+			return true;
+		}
+		return false;
+	}
+
 	private void putPiece(Piece piece, int row, int col) {
 		grid[row][col] = new Cell(piece);
 	}
 
-	public void locateRemoveMovingPiece(Piece piece, int row, int col, int rowPositionIndex, int colPositionIndex) {
+	public void locateRemoveMovingPiece(Piece piece, int row, int col, int rowPositionIndex, int colPositionIndex,
+			boolean isCaptured) {
 		switch (piece.getName()) {
 		case K:
-			locateRemoveKingOrQueen(piece, row, col);
-			break;
 		case Q:
 			locateRemoveKingOrQueen(piece, row, col);
 			break;
 		case R:
+			locateRemoveRook(piece, row, col, rowPositionIndex, colPositionIndex);
 			break;
 		case B:
-			locateRemoveBishop(piece, row, col,rowPositionIndex,colPositionIndex);
 			break;
 		case N:
 			break;
@@ -211,49 +222,55 @@ class Chess {
 			break;
 		}
 	}
-	private void locateRemoveBishop(Piece piece, int row, int col,int rowPositionIndex,int colPositionIndex) {
-		String position1, position2;
-		String [] s1,s2;
-		int delRow=0,delCol=0;
-		if( row== -1 && col == -1){
-			if (piece.getColor().equals(PieceColor.W)) {
-				position1 = whitePiecePositions.get(piece.getName().toString())+ " 1";
-				position2 = whitePiecePositions.get(piece.getName().toString())+ " 2";
-				s1 = position1.split(" ");
-				if(Math.abs(Integer.parseInt(s1[0])-row) == Math.abs(Integer.parseInt(s1[1])-col)) {
-					delRow = Integer.parseInt(s1[0]);
-					delCol = Integer.parseInt(s1[1]);
-					
-				}
-				else {
-					s2 = position2.split(" ");
-					delRow = Integer.parseInt(s2[0]);
-					delCol = Integer.parseInt(s2[1]);
-				}
-			}
-			else {
-				position1 = blackPiecePositions.get(piece.getName().toString())+ " 1";
-				position2 = blackPiecePositions.get(piece.getName().toString())+ " 2";
-				s1 = position1.split(" ");
-				if(Math.abs(Integer.parseInt(s1[0])-row) == Math.abs(Integer.parseInt(s1[1])-col)) {
-					delRow = Integer.parseInt(s1[0]);
-					delCol = Integer.parseInt(s1[1]);
-					
-				}
-				else {
-					s2 = position2.split(" ");
-					delRow = Integer.parseInt(s2[0]);
-					delCol = Integer.parseInt(s2[1]);
-				}
-			}
+
+	private void locateRemoveRook(Piece piece, int row, int col, int rowPositionIndex, int colPositionIndex) {
+		String position1;
+		String position2;
+		if (piece.getColor().equals(PieceColor.W)) {
+			position1 = whitePiecePositions.get(piece.getName().toString() + " " + 1);
+			position2 = whitePiecePositions.get(piece.getName().toString() + " " + 2);
+			// whitePiecePositions.put(piece.getName().toString(), row + " " +
+			// col);
+		} else {
+			position1 = blackPiecePositions.get(piece.getName().toString() + " " + 1);
+			position2 = blackPiecePositions.get(piece.getName().toString() + " " + 2);
+			// blackPiecePositions.put(piece.getName().toString(), row + " " +
+			// col);
 		}
-		removePiece(delRow,delCol);		
+		String[] s = position1.split(" ");
+		int delRow1 = Integer.parseInt(s[0]);
+		int delCol1 = Integer.parseInt(s[1]);
+		s = position2.split(" ");
+		int delRow2 = Integer.parseInt(s[0]);
+		int delCol2 = Integer.parseInt(s[1]);
+		int delRow = 0;
+		int delCol = 0;
+		if (rowPositionIndex != -1) {
+			delRow = rowPositionIndex == delRow1 ? delRow1 : delRow2;
+			delCol = rowPositionIndex == delRow1 ? delCol1 : delCol2;
+			removePiece(delRow, delCol);
+			return;
+		}
+		if (colPositionIndex != -1) {
+			delRow = colPositionIndex == delCol1 ? delRow1 : delRow2;
+			delCol = colPositionIndex == delCol1 ? delCol1 : delCol2;
+			removePiece(delRow, delCol);
+			return;
+		}
+		if (isMovePossible) {
+			
+		} else {
+			
+		}
+
+		removePiece(delRow, delCol);
 	}
+
+	
 	private void locateRemoveKingOrQueen(Piece piece, int row, int col) {
 		String position;
 		if (piece.getColor().equals(PieceColor.W)) {
 			position = whitePiecePositions.get(piece.getName().toString());
-			System.out.println(position + "*****" + row + "," + col);
 			whitePiecePositions.put(piece.getName().toString(), row + " " + col);
 		} else {
 			position = blackPiecePositions.get(piece.getName());
