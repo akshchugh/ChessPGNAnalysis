@@ -229,7 +229,7 @@ class Chess {
 		case N:
 			break;
 		case P:
-			locateRemovePawn(piece, row, col, rowPositionIndex, colPositionIndex);
+			locateRemovePawn(piece, row, col, rowPositionIndex, colPositionIndex, isCaptured);
 			break;
 		}
 	}
@@ -330,7 +330,55 @@ class Chess {
 		int delCol = Integer.parseInt(s[1]);
 		removePiece(delRow, delCol);
 	}
+	private void locateRemovePawn(Piece piece, int row, int col, rowPositionIndex, colPositionIndex, isCaptured){
+		
+		
+		Cell captureFromLeft = new Cell();
+		Cell captureFromRight = new Cell();
+		Cell oneCellAway = new Cell();
+		Cell twoCellsAway = new Cell();
+		
+		if (piece.getColor().equals(PieceColor.W)) {
+				captureFromLeft = grid[row-1][col-1];
+				captureFromRight = grid[row-1][col+1];
+				oneCellAway = grid[row-1][col];
+				twoCellsAway = grid[row-2][col];
+				
+				if((captureFromLeft.getPiece()).getName() == PieceName.P){
+					removePiece(row-1, col-1); 
+				}
+				else if ((captureFromRight.getPiece()).getName() == PieceName.P){
+					removePiece(row-1, col+1); 
+				}
+				else if ((captureFromRight.getPiece()).getName() == PieceName.P){
+					removePiece(row-1, col); 
+				}
+				else {
+					removePiece(row-2, col); 
+				}
+		}
+		else {
+				captureFromLeft = grid[row+1][col-1];
+				captureFromRight = grid[row+1][col+1];
+				oneCellAway = grid[row+1][col];
+				twoCellsAway = grid[row+2][col];
+				
+				if((captureFromLeft.getPiece()).getName() == PieceName.P){
+					removePiece(row+1, col-1); 
+				}
+				else if ((captureFromRight.getPiece()).getName() == PieceName.P){
+					removePiece(row+1, col+1); 
+				}
+				else if ((captureFromRight.getPiece()).getName() == PieceName.P){
+					removePiece(row+1, col); 
+				}
+				else {
+					removePiece(row+2, col); 
+				}
 
+		}
+	}
+			
 	private void removePiece(int row, int col) {
 		grid[row][col].setPiece(null);
 	}
