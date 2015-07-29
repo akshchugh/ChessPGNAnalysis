@@ -13,13 +13,18 @@ class Chess {
 
 	public void nextMove(String move, char playerColor) {
 		int row = preProcessDataRow(move);
-		int col = preProcessDataRow(move);
+		int col = preProcessDataCol(move);
 		Piece piece = preProcessDataPiece(move, playerColor);
 		int rowPositionIndex = preProcessDataRowPositionIndex(move);
 		int colPositionIndex = preProcessDataColPositionIndex(move);
 
 		// call putPiece
 		// call locateRemoveMovingPiece
+	}
+
+	private int preProcessDataCol(String move) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	private int preProcessDataColPositionIndex(String move) {

@@ -1,13 +1,13 @@
 class Piece {
-	private char name;
+	private PieceName name;
 	private char colour;
 
-	public Piece(char name, char colour) {
+	public Piece(PieceName name, char colour) {
 		this.name = name;
 		this.colour = colour;
 	}
 
-	public char getName() {
+	public PieceName getName() {
 		return name;
 	}
 
