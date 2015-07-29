@@ -6,4 +6,4 @@ Piece
 Chess 
 	has a grid of cells [8x8]
 Cell
-	has piece objects
+	Piece object
