@@ -17,7 +17,7 @@ class Piece {
 
 	@Override
 	public String toString() {
-		return "Piece [name = " + name + ", color = " + color + "]";
+		return color + "-" + name;
 	}
 
 }
