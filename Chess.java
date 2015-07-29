@@ -7,7 +7,7 @@ class Chess {
 	}
 
 	private void initializeGrid() {
-		// TODO Auto-generated method stub
+		Piece pawn=new Piece(PieceName.P,PieceColor.B);
 
 	}
 
