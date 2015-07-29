@@ -229,10 +229,10 @@ class Chess {
 			locateRemoveKnight(piece, row, col, rowPositionIndex, colPositionIndex);
 			break;
 		case P:
-			// locateRemovePawn(piece, row, col, rowPositionIndex,
-			// colPositionIndex);
+			locateRemovePawn(piece, row, col, rowPositionIndex, colPositionIndex, isCaptured);
 			break;
 		}
+
 	}
 
 	private void locateRemoveKnight(Piece piece, int row, int col, int rowPositionIndex, int colPositionIndex) {
@@ -291,8 +291,38 @@ class Chess {
 		return false;
 	}
 
+	private boolean isPossibleBishopMove(int newrow, int newcol, int oldrow, int oldcol) {
+		if (Math.abs(newrow - oldrow) != Math.abs(newcol - oldcol)) {
+			return false;
+		} else {
+			if (newrow > oldrow && newcol > oldcol) {
+				for (int i = 1; i <= (newrow - oldrow); i++) {
+					if (grid[oldrow + i][oldcol + i] != null)
+						return false;
+				}
+
+			} else if (newrow > oldrow && newcol < oldcol) {
+				for (int i = 1; i <= (newrow - oldrow); i++) {
+					if (grid[oldrow + i][oldcol - i] != null)
+						return false;
+				}
+			} else if (newrow < oldrow && newcol > oldcol) {
+				for (int i = 1; i <= (newcol - oldcol); i++) {
+					if (grid[oldrow - i][oldcol + i] != null)
+						return false;
+				}
+			} else {
+				for (int i = 1; i <= (oldcol - newcol); i++) {
+					if (grid[oldrow - i][oldcol - i] != null)
+						return false;
+				}
+			}
+		}
+		return true;
+	}
+
 	private void locateRemoveBishop(Piece piece, int row, int col, int rowPositionIndex, int colPositionIndex) {
-		String position1, position2;
+		String position1 = "", position2 = "";
 		String[] s1, s2;
 		int delRow = 0, delCol = 0;
 		if (row == -1 && col == -1) {
@@ -300,16 +330,24 @@ class Chess {
 				position1 = whitePiecePositions.get(piece.getName().toString()) + " 1";
 				position2 = whitePiecePositions.get(piece.getName().toString()) + " 2";
 				s1 = position1.split(" ");
-				if (Math.abs(Integer.parseInt(s1[0]) - row) == Math.abs(Integer.parseInt(s1[1]) - col)) {
+				if (isPossibleBishopMove(row, col, Integer.parseInt(s1[0]), Integer.parseInt(s1[1]))) {
 					delRow = Integer.parseInt(s1[0]);
 					delCol = Integer.parseInt(s1[1]);
-
 				} else {
-					s2 = position2.split(" ");
-					delRow = Integer.parseInt(s2[0]);
-					delCol = Integer.parseInt(s2[1]);
+					if (Math.abs(Integer.parseInt(s1[0]) - row) == Math.abs(Integer.parseInt(s1[1]) - col)) {
+						delRow = Integer.parseInt(s1[0]);
+						delCol = Integer.parseInt(s1[1]);
+
+					} else {
+						s2 = position2.split(" ");
+						delRow = Integer.parseInt(s2[0]);
+						delCol = Integer.parseInt(s2[1]);
+					}
+
 				}
-			} else {
+			}
+
+			else {
 				position1 = blackPiecePositions.get(piece.getName().toString()) + " 1";
 				position2 = blackPiecePositions.get(piece.getName().toString()) + " 2";
 				s1 = position1.split(" ");
@@ -324,7 +362,26 @@ class Chess {
 				}
 			}
 		}
+		String s3[] = position1.split(" ");
+		int delRow1 = Integer.parseInt(s3[0]);
+		int delCol1 = Integer.parseInt(s3[1]);
+		s3 = position2.split(" ");
+		int delRow2 = Integer.parseInt(s3[0]);
+		int delCol2 = Integer.parseInt(s3[1]);
+		if (rowPositionIndex != -1) {
+			delRow = rowPositionIndex == delRow1 ? delRow1 : delRow2;
+			delCol = rowPositionIndex == delRow1 ? delCol1 : delCol2;
+			removePiece(delRow, delCol);
+			return;
+		}
+		if (colPositionIndex != -1) {
+			delRow = colPositionIndex == delCol1 ? delRow1 : delRow2;
+			delCol = colPositionIndex == delCol1 ? delCol1 : delCol2;
+			removePiece(delRow, delCol);
+			return;
+		}
 		removePiece(delRow, delCol);
+
 	}
 
 	private void locateRemoveRook(Piece piece, int row, int col, int rowPositionIndex, int colPositionIndex) {
@@ -407,6 +464,47 @@ class Chess {
 		int delRow = Integer.parseInt(s[0]);
 		int delCol = Integer.parseInt(s[1]);
 		removePiece(delRow, delCol);
+	}
+
+	private void locateRemovePawn(Piece piece, int row, int col, int rowPositionIndex, int colPositionIndex,
+			boolean isCaptured) {
+		Cell captureFromLeft = new Cell();
+		Cell captureFromRight = new Cell();
+		Cell oneCellAway = new Cell();
+		Cell twoCellsAway = new Cell();
+
+		if (piece.getColor().equals(PieceColor.W)) {
+			captureFromLeft = grid[row - 1][col - 1];
+			captureFromRight = grid[row - 1][col + 1];
+			oneCellAway = grid[row - 1][col];
+			twoCellsAway = grid[row - 2][col];
+
+			if ((captureFromLeft.getPiece()).getName() == PieceName.P) {
+				removePiece(row - 1, col - 1);
+			} else if ((captureFromRight.getPiece()).getName() == PieceName.P) {
+				removePiece(row - 1, col + 1);
+			} else if ((captureFromRight.getPiece()).getName() == PieceName.P) {
+				removePiece(row - 1, col);
+			} else {
+				removePiece(row - 2, col);
+			}
+		} else {
+			captureFromLeft = grid[row + 1][col - 1];
+			captureFromRight = grid[row + 1][col + 1];
+			oneCellAway = grid[row + 1][col];
+			twoCellsAway = grid[row + 2][col];
+
+			if ((captureFromLeft.getPiece()).getName() == PieceName.P) {
+				removePiece(row + 1, col - 1);
+			} else if ((captureFromRight.getPiece()).getName() == PieceName.P) {
+				removePiece(row + 1, col + 1);
+			} else if ((captureFromRight.getPiece()).getName() == PieceName.P) {
+				removePiece(row + 1, col);
+			} else {
+				removePiece(row + 2, col);
+			}
+
+		}
 	}
 
 	private void removePiece(int row, int col) {
