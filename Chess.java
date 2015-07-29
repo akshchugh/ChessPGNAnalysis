@@ -119,8 +119,8 @@ class Chess {
 	}
 
 	private int preProcessDataCol(String move) {
-
 		int columnIndex = 0;
+
 		char lastChar = move.charAt(move.length() - 1);
 		char columnChar = move.charAt(move.length() - 2);
 		if (lastChar == 'O') {
@@ -216,7 +216,9 @@ class Chess {
 			break;
 		}
 	}
-
+	private void locateRemoveBishop(Piece piece, int row, int col) {
+		
+	}
 	private void locateRemoveKingOrQueen(Piece piece, int row, int col) {
 		String position;
 		if (piece.getColor().equals(PieceColor.W)) {
