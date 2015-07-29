@@ -468,22 +468,22 @@ class Chess {
 
 	private void locateRemovePawn(Piece piece, int row, int col, int rowPositionIndex, int colPositionIndex,
 			boolean isCaptured) {
-		Cell captureFromLeft = new Cell();
-		Cell captureFromRight = new Cell();
-		Cell oneCellAway = new Cell();
-		Cell twoCellsAway = new Cell();
+		Cell captureFromLeft;
+		Cell captureFromRight;
+		Cell oneCellAway;
+		Cell twoCellsAway;
 
 		if (piece.getColor().equals(PieceColor.W)) {
 			captureFromLeft = grid[row - 1][col - 1];
 			captureFromRight = grid[row - 1][col + 1];
 			oneCellAway = grid[row - 1][col];
 			twoCellsAway = grid[row - 2][col];
-
-			if ((captureFromLeft.getPiece()).getName() == PieceName.P) {
+			if (captureFromLeft.getPiece() != null && captureFromLeft.getPiece().getName().equals(PieceName.P)) {
 				removePiece(row - 1, col - 1);
-			} else if ((captureFromRight.getPiece()).getName() == PieceName.P) {
+			} else if (captureFromRight.getPiece() != null
+					&& (captureFromRight.getPiece()).getName().equals(PieceName.P)) {
 				removePiece(row - 1, col + 1);
-			} else if ((captureFromRight.getPiece()).getName() == PieceName.P) {
+			} else if (oneCellAway.getPiece() != null && (oneCellAway.getPiece()).getName().equals(PieceName.P)) {
 				removePiece(row - 1, col);
 			} else {
 				removePiece(row - 2, col);
@@ -494,11 +494,12 @@ class Chess {
 			oneCellAway = grid[row + 1][col];
 			twoCellsAway = grid[row + 2][col];
 
-			if ((captureFromLeft.getPiece()).getName() == PieceName.P) {
+			if (captureFromLeft.getPiece() != null && (captureFromLeft.getPiece()).getName().equals(PieceName.P)) {
 				removePiece(row + 1, col - 1);
-			} else if ((captureFromRight.getPiece()).getName() == PieceName.P) {
+			} else if (captureFromRight.getPiece() != null
+					&& (captureFromRight.getPiece()).getName().equals(PieceName.P)) {
 				removePiece(row + 1, col + 1);
-			} else if ((captureFromRight.getPiece()).getName() == PieceName.P) {
+			} else if (oneCellAway.getPiece() != null && (oneCellAway.getPiece()).getName().equals(PieceName.P)) {
 				removePiece(row + 1, col);
 			} else {
 				removePiece(row + 2, col);
