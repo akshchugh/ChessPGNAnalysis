@@ -11,7 +11,7 @@ class Chess {
 
 	}
 
-	public void nextMove(String move, boolean playerFlag) {
+	public void nextMove(String move, char playerColor) {
 		// call putPiece
 		// call locateRemoveMovingPiece
 	}
@@ -21,7 +21,7 @@ class Chess {
 
 	}
 
-	private void locateRemoveMovingPiece(Piece piece, int row, int col, boolean playerFlag, int positionIndex) {
+	private void locateRemoveMovingPiece(Piece piece, int row, int col, char playerColor, int positionIndex) {
 		// TODO Auto-generated method stub
 		// call removePiece
 	}
