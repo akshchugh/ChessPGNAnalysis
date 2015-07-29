@@ -167,7 +167,13 @@ class Chess {
 
 	private int preProcessDataRowPositionIndex(String move) {
 		// return -1 if not applicable
-		return 0;
+		int rowPosition = -1;
+		if (move.length() == 4){
+			if( Character.isDigit(move.charAt(1)) )){
+				rowPosition = Character.getNumericValue(move.charAt(1)) - 1;
+			}
+		}
+		return rowPosition;
 	}
 
 	private Piece preProcessDataPiece(String move, char playerColor) {
