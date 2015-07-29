@@ -15,7 +15,79 @@ class Chess {
 
 	private void initializeGrid() {
 		Piece pawn = new Piece(PieceName.P, PieceColor.B);
-
+		Piece pieceObject;
+		Cell cell;
+		for(int i=0;i<8;i++) {
+			pieceObject=new Piece(PieceName.P,PieceColor.W);
+			cell= new Cell(pieceObject);
+			grid[1][i]=cell;
+		}
+		for(int i=0;i<8;i++) {
+			pieceObject=new Piece(PieceName.P,PieceColor.B);
+			cell= new Cell(pieceObject);
+			grid[6][i]=cell;
+		}	
+		for(int i=2;i<6;i++) {
+			for(int j=0;j<8;j++) {
+				cell= new Cell();
+				grid[i][j]=cell;
+			}
+		}
+		pieceObject=new Piece(PieceName.R,PieceColor.W);
+		cell= new Cell(pieceObject);
+		grid[0][0]=cell;
+		pieceObject=new Piece(PieceName.R,PieceColor.W);
+		cell= new Cell(pieceObject);
+		grid[0][7]=cell;
+		pieceObject=new Piece(PieceName.R,PieceColor.B);
+		cell= new Cell(pieceObject);
+		grid[7][0]=cell;
+		pieceObject=new Piece(PieceName.R,PieceColor.B);
+		cell= new Cell(pieceObject);
+		grid[7][7]=cell;
+		
+		pieceObject=new Piece(PieceName.N,PieceColor.W);
+		cell= new Cell(pieceObject);
+		grid[0][1]=cell;
+		pieceObject=new Piece(PieceName.N,PieceColor.W);
+		cell= new Cell(pieceObject);
+		grid[0][6]=cell;
+		pieceObject=new Piece(PieceName.N,PieceColor.B);
+		cell= new Cell(pieceObject);
+		grid[7][1]=cell;
+		pieceObject=new Piece(PieceName.N,PieceColor.B);
+		cell= new Cell(pieceObject);
+		grid[7][6]=cell;
+		
+		pieceObject=new Piece(PieceName.B,PieceColor.W);
+		cell= new Cell(pieceObject);
+		grid[0][2]=cell;
+		pieceObject=new Piece(PieceName.B,PieceColor.W);
+		cell= new Cell(pieceObject);
+		grid[0][5]=cell;
+		pieceObject=new Piece(PieceName.B,PieceColor.B);
+		cell= new Cell(pieceObject);
+		grid[7][2]=cell;
+		pieceObject=new Piece(PieceName.B,PieceColor.B);
+		cell= new Cell(pieceObject);
+		grid[7][5]=cell;
+		
+		pieceObject=new Piece(PieceName.Q,PieceColor.W);
+		cell= new Cell(pieceObject);
+		grid[0][3]=cell;
+		pieceObject=new Piece(PieceName.Q,PieceColor.B);
+		cell= new Cell(pieceObject);
+		grid[7][3]=cell;
+		
+		pieceObject=new Piece(PieceName.K,PieceColor.W);
+		cell= new Cell(pieceObject);
+		grid[0][4]=cell;
+		pieceObject=new Piece(PieceName.K,PieceColor.B);
+		cell= new Cell(pieceObject);
+		grid[7][4]=cell;
+		
+		
+		
 	}
 
 	public void nextMove(String move, char playerColor) {
@@ -45,8 +117,27 @@ class Chess {
 	}
 
 	private Piece preProcessDataPiece(String move, char playerColor) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		PieceName piece_name ;
+		PieceColor piece_color ;
+		
+		if (Character.isLowerCase(move.charAt(0))){
+			piece_name = PieceName.P;
+		}
+		else {
+			piece_name = PieceName.valueOf(move.charAt(0)+"");	
+		}
+		
+		if (playerColor == 'W'){
+			piece_color = PieceColor.W;
+		}
+		else {
+			piece_color = PieceColor.B;
+		}
+		
+		Piece piece = new Piece(piece_name,piece_color);
+		
+		return piece;
 	}
 
 	private int preProcessDataRow(String move) {
@@ -102,7 +193,7 @@ class Chess {
 	public void displayBoard() {
 		for (int i = 0; i < grid.length; i++) {
 			for (int j = 0; j < grid.length; j++) {
-				System.out.print(grid[i][j] + " ");
+				System.out.print(grid[i][j].getPiece() + " ");
 			}
 			System.out.println();
 		}
