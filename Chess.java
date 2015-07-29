@@ -232,8 +232,7 @@ class Chess {
 			break;
 		}
 	}
-<<<<<<< HEAD
-	private boolean isPossibleBishopMove(int newrow, int newcol, int oldrow , int oldcol) {
+private boolean isPossibleBishopMove(int newrow, int newcol, int oldrow , int oldcol) {
 		if(Math.abs(newrow-oldrow) != Math.abs(newcol-oldcol)) {
 			return false;
 		}
@@ -267,7 +266,7 @@ class Chess {
 		return true;
 	}
 	private void locateRemoveBishop(Piece piece, int row, int col, int rowPositionIndex, int colPositionIndex) {
-		String position1, position2;
+		String position1="", position2="";
 		String[] s1, s2;
 		int delRow = 0, delCol = 0;
 		if (row == -1 && col == -1) {
