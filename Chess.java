@@ -12,8 +12,34 @@ class Chess {
 	}
 
 	public void nextMove(String move, char playerColor) {
+		int row = preProcessDataRow(move);
+		int col = preProcessDataRow(move);
+		Piece piece = preProcessDataPiece(move, playerColor);
+		int rowPositionIndex = preProcessDataRowPositionIndex(move);
+		int colPositionIndex = preProcessDataColPositionIndex(move);
+
 		// call putPiece
 		// call locateRemoveMovingPiece
+	}
+
+	private int preProcessDataColPositionIndex(String move) {
+		// return -1 if not applicable
+		return 0;
+	}
+
+	private int preProcessDataRowPositionIndex(String move) {
+		// return -1 if not applicable
+		return 0;
+	}
+
+	private Piece preProcessDataPiece(String move, char playerColor) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private int preProcessDataRow(String move) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	private void putPiece(Piece piece, int row, int col) {
@@ -21,7 +47,7 @@ class Chess {
 
 	}
 
-	private void locateRemoveMovingPiece(Piece piece, int row, int col, char playerColor, int positionIndex) {
+	private void locateRemoveMovingPiece(Piece piece, int row, int col, int rowPositionIndex, int colPositionIndex) {
 		// TODO Auto-generated method stub
 		// call removePiece
 	}
