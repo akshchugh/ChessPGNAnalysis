@@ -113,8 +113,8 @@ class Chess {
 		Piece piece = preProcessDataPiece(move, playerColor);
 		int rowPositionIndex = preProcessDataRowPositionIndex(move);
 		int colPositionIndex = preProcessDataColPositionIndex(move);
-
-		// call putPiece
+		putPiece(piece, row, col);
+		locateRemoveMovingPiece(piece, row, col, rowPositionIndex, colPositionIndex);
 		// call locateRemoveMovingPiece
 	}
 
@@ -189,10 +189,10 @@ class Chess {
 	public void locateRemoveMovingPiece(Piece piece, int row, int col, int rowPositionIndex, int colPositionIndex) {
 		switch (piece.getName()) {
 		case K:
-			locateRemoveKingOrQueen(piece, rowPositionIndex, colPositionIndex);
+			locateRemoveKingOrQueen(piece, row, col);
 			break;
 		case Q:
-			locateRemoveKingOrQueen(piece, rowPositionIndex, colPositionIndex);
+			locateRemoveKingOrQueen(piece, row, col);
 			break;
 		case R:
 			break;
@@ -208,7 +208,8 @@ class Chess {
 	private void locateRemoveKingOrQueen(Piece piece, int row, int col) {
 		String position;
 		if (piece.getColor().equals(PieceColor.W)) {
-			position = whitePiecePositions.get(piece.getName());
+			position = whitePiecePositions.get(piece.getName().toString());
+			System.out.println(position + "*****" + row + "," + col);
 			whitePiecePositions.put(piece.getName().toString(), row + " " + col);
 		} else {
 			position = blackPiecePositions.get(piece.getName());
@@ -231,7 +232,7 @@ class Chess {
 			}
 			System.out.println();
 		}
-
+		System.out.println(whitePiecePositions);
 	}
 
 }
