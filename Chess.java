@@ -109,12 +109,15 @@ class Chess {
 
 		int rowIndex;
 		char lastChar = move.charAt(move.length() - 1);
-		if (lastChar == 'O' && playerColor == 'B') {
-			rowIndex = 8;
-		} else if (lastChar == 'O' && playerColor == 'W') {
-			rowIndex = 1;
-		} else {
-			rowIndex = Character.getNumericValue(lastChar);
+
+		if (lastChar == 'O' && playerColor == 'B'){
+			rowIndex = 7;
+		}
+		else if (lastChar == 'O' && playerColor == 'W'){
+			rowIndex = 0;
+		}
+		else {
+			rowIndex = Character.getNumericValue(lastChar) - 1;
 		}
 		return rowIndex;
 	}
