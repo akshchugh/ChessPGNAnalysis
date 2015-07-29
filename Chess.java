@@ -58,8 +58,7 @@ class Chess {
 	}
 
 	private void removePiece(int row, int col) {
-		// TODO Auto-generated method stub
-
+		grid[row][col].setPiece(null);
 	}
 
 }
