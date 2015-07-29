@@ -154,7 +154,7 @@ class Chess {
 	}
 	
 	private int preProcessDataColPositionIndex(String move) {
-		// return -1 if not applicable
+		
 		int colPosition = -1;
 		char colPositionChar = move.charAt(1);
 		if (move.length() == 4){
@@ -166,12 +166,12 @@ class Chess {
 	}
 
 	private int preProcessDataRowPositionIndex(String move) {
-		// return -1 if not applicable
+		
 		int rowPosition = -1;
 		if (move.length() == 4){
 			if( Character.isDigit(move.charAt(1)) )){
 				rowPosition = Character.getNumericValue(move.charAt(1)) - 1;
-			}
+				}
 		}
 		return rowPosition;
 	}
