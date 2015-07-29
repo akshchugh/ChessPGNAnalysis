@@ -113,13 +113,15 @@ class Chess {
 		Piece piece = preProcessDataPiece(move, playerColor);
 		int rowPositionIndex = preProcessDataRowPositionIndex(move);
 		int colPositionIndex = preProcessDataColPositionIndex(move);
+		boolean isCaptured = preProcessDataCapture(move);
+
 		putPiece(piece, row, col);
-		locateRemoveMovingPiece(piece, row, col, rowPositionIndex, colPositionIndex);
+		locateRemoveMovingPiece(piece, row, col, rowPositionIndex, colPositionIndex,isCaptured);
 	}
 
 	private int preProcessDataCol(String move) {
-
 		int columnIndex = 0;
+
 		char lastChar = move.charAt(move.length() - 1);
 		char columnChar = move.charAt(move.length() - 2);
 		if (lastChar == 'O') {
@@ -153,20 +155,26 @@ class Chess {
 	}
 
 	private int preProcessDataColPositionIndex(String move) {
-		// return -1 if not applicable
-		int rowPosition = -1;
-		char rowPositionChar = move.charAt(1);
+
+		int colPosition = -1;
+		char colPositionChar = move.charAt(1);
 		if (move.length() == 4) {
-			if (charInRange(rowPositionChar, 'a', 'h')) {
-				rowPosition = rowPositionChar - 'a';
+			if (charInRange(colPositionChar, 'a', 'h')) {
+				colPosition = colPositionChar - 'a';
 			}
 		}
-		return rowPosition;
+		return colPosition;
 	}
 
 	private int preProcessDataRowPositionIndex(String move) {
-		// return -1 if not applicable
-		return 0;
+
+		int rowPosition = -1;
+		if (move.length() == 4) {
+			if (Character.isDigit(move.charAt(1))) {
+				rowPosition = Character.getNumericValue(move.charAt(1)) - 1;
+			}
+		}
+		return rowPosition;
 	}
 
 	private Piece preProcessDataPiece(String move, char playerColor) {
@@ -187,9 +195,11 @@ class Chess {
 		return piece;
 	}
 
-	private int preProcessDataRow(String move) {
-		// TODO Auto-generated method stub
-		return 0;
+	private boolean preProcessDataCapture(String move){
+		if(move.charAt(1) == 'x'){
+			return true;
+		}
+		return false;
 	}
 
 	private void putPiece(Piece piece, int row, int col) {
@@ -258,6 +268,7 @@ class Chess {
 		removePiece(delRow, delCol);
 	}
 
+	
 	private void locateRemoveKingOrQueen(Piece piece, int row, int col) {
 		String position;
 		if (piece.getColor().equals(PieceColor.W)) {
