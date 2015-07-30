@@ -40,3 +40,4 @@ Kd2 Kb5
 Rd6 Kc5 
 Ra6 Nf2
 g4 Bd3
+Re6 
