@@ -108,6 +108,7 @@ class Chess {
 
 	public void nextMove(String move, char playerColor) {
 
+		move = removePlus(move);
 		int row = preProcessDataRow(move, playerColor);
 		int col = preProcessDataCol(move);
 		Piece piece = preProcessDataPiece(move, playerColor);
@@ -118,7 +119,12 @@ class Chess {
 		putPiece(piece, row, col);
 		locateRemoveMovingPiece(piece, row, col, rowPositionIndex, colPositionIndex, isCaptured);
 	}
-
+	private String removePlus(String move){
+		if (move.length() > 0 && move.charAt(move.length()-1)=='+') {
+			move = move.substring(0, move.length()-1);
+		}
+		return move;
+	}
 	private int preProcessDataCol(String move) {
 		int columnIndex = 0;
 		char lastChar = move.charAt(move.length() - 1);
