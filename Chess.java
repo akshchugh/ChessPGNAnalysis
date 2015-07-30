@@ -457,7 +457,7 @@ class Chess {
 			position = whitePiecePositions.get(piece.getName().toString());
 			whitePiecePositions.put(piece.getName().toString(), row + " " + col);
 		} else {
-			position = blackPiecePositions.get(piece.getName());
+			position = blackPiecePositions.get(piece.getName().toString());
 			blackPiecePositions.put(piece.getName().toString(), row + " " + col);
 		}
 		String[] s = position.split(" ");
