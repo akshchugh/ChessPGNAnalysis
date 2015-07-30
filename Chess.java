@@ -339,25 +339,22 @@ class Chess {
 				if (isPossibleBishopMove(row, col, Integer.parseInt(s1[0]), Integer.parseInt(s1[1]))) {
 					delRow = Integer.parseInt(s1[0]);
 					delCol = Integer.parseInt(s1[1]);
-				} else {
-					if (Math.abs(Integer.parseInt(s1[0]) - row) == Math.abs(Integer.parseInt(s1[1]) - col)) {
-						delRow = Integer.parseInt(s1[0]);
-						delCol = Integer.parseInt(s1[1]);
-
-					} else {
+				} 
+				else {
 						s2 = position2.split(" ");
 						delRow = Integer.parseInt(s2[0]);
 						delCol = Integer.parseInt(s2[1]);
 					}
 
 				}
-			}
+		
+			
 
 			else {
 				position1 = blackPiecePositions.get(piece.getName().toString() + " " + 1);
 				position2 = blackPiecePositions.get(piece.getName().toString() + " " + 2);
 				s1 = position1.split(" ");
-				if (Math.abs(Integer.parseInt(s1[0]) - row) == Math.abs(Integer.parseInt(s1[1]) - col)) {
+				if (isPossibleBishopMove(row, col, Integer.parseInt(s1[0]), Integer.parseInt(s1[1]))) {
 					delRow = Integer.parseInt(s1[0]);
 					delCol = Integer.parseInt(s1[1]);
 
@@ -387,8 +384,8 @@ class Chess {
 			return;
 		}
 		removePiece(delRow, delCol);
-
-	}
+		}
+	
 
 	private void locateRemoveRook(Piece piece, int row, int col, int rowPositionIndex, int colPositionIndex) {
 		String position1;
@@ -463,7 +460,7 @@ class Chess {
 			position = whitePiecePositions.get(piece.getName().toString());
 			whitePiecePositions.put(piece.getName().toString(), row + " " + col);
 		} else {
-			position = blackPiecePositions.get(piece.getName());
+			position = blackPiecePositions.get(piece.getName().toString());
 			blackPiecePositions.put(piece.getName().toString(), row + " " + col);
 		}
 		String[] s = position.split(" ");
