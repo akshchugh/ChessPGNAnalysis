@@ -235,7 +235,7 @@ class Chess {
 			locateRemoveKnight(piece, row, col, rowPositionIndex, colPositionIndex);
 			break;
 		case P:
-			locateRemovePawn(piece, row, col, rowPositionIndex, colPositionIndex, isCaptured);
+			locateRemovePawn(piece, row, col, colPositionIndex, isCaptured);
 			break;
 		}
 
@@ -469,49 +469,53 @@ class Chess {
 		removePiece(delRow, delCol);
 	}
 
-	private void locateRemovePawn(Piece piece, int row, int col, int rowPositionIndex, int colPositionIndex,
+	private void locateRemovePawn(Piece piece, int row, int col, int colPositionIndex,
 			boolean isCaptured) {
-		Cell captureFromLeft;
-		Cell captureFromRight;
+
 		Cell oneCellAway;
 		Cell twoCellsAway;
 
 		if (piece.getColor().equals(PieceColor.W)) {
-			captureFromLeft = ((row - 1) >= 0 && (col - 1) >= 0) ? grid[row - 1][col - 1] : null;
-			captureFromRight = ((row - 1) >= 0 && (col + 1) <= 7) ? grid[row - 1][col + 1] : null;
+
 			oneCellAway = ((row - 1) >= 0) ? grid[row - 1][col] : null;
 			twoCellsAway = ((row - 2) >= 0) ? grid[row - 2][col] : null;
-			if (captureFromLeft != null && captureFromLeft.getPiece() != null
-					&& captureFromLeft.getPiece().getName().equals(PieceName.P)) {
-				removePiece(row - 1, col - 1);
-			} else if (captureFromRight != null && captureFromRight.getPiece() != null
-					&& (captureFromRight.getPiece()).getName().equals(PieceName.P)) {
+			if(isCaptured){
+				
+				if (colPositionIndex == (col - 1)) {
+					removePiece(row - 1, col - 1);
+				} else {
 				removePiece(row - 1, col + 1);
-			} else if (oneCellAway != null && oneCellAway.getPiece() != null
-					&& (oneCellAway.getPiece()).getName().equals(PieceName.P)) {
-				removePiece(row - 1, col);
-			} else {
-				removePiece(row - 2, col);
+				}
 			}
-		} else {
-			captureFromLeft = ((row + 1) <= 7 && (col - 1) >= 0) ? grid[row + 1][col - 1] : null;
-			captureFromRight = ((row + 1) <= 7 && (col + 1) <= 7) ? grid[row + 1][col + 1] : null;
+			else{
+				if (oneCellAway != null && oneCellAway.getPiece() != null && (oneCellAway.getPiece()).getName().equals(PieceName.P)) {
+					removePiece(row - 1, col);
+				} else {
+					removePiece(row - 2, col);
+				}
+			} 
+		}
+		else {
 			oneCellAway = ((row + 1) <= 7) ? grid[row + 1][col] : null;
 			twoCellsAway = ((row + 2) <= 7) ? grid[row + 2][col] : null;
-
-			if (captureFromLeft != null && captureFromLeft.getPiece() != null
-					&& (captureFromLeft.getPiece()).getName().equals(PieceName.P)) {
-				removePiece(row + 1, col - 1);
-			} else if (captureFromRight != null && captureFromRight.getPiece() != null
-					&& (captureFromRight.getPiece()).getName().equals(PieceName.P)) {
-				removePiece(row + 1, col + 1);
-			} else if (oneCellAway != null && oneCellAway.getPiece() != null
-					&& (oneCellAway.getPiece()).getName().equals(PieceName.P)) {
-				removePiece(row + 1, col);
-			} else {
-				removePiece(row + 2, col);
+			
+			if(isCaptured){
+				
+				if (colPositionIndex == (col - 1)) {
+					removePiece(row + 1, col - 1);
+				} else {
+					removePiece(row + 1, col + 1);
+				}
 			}
-
+			
+			else{
+				if (oneCellAway != null && oneCellAway.getPiece() != null && (oneCellAway.getPiece()).getName().equals(PieceName.P)) {
+					removePiece(row + 1, col);
+				} else {
+					removePiece(row + 2, col);
+				}
+			} 
+			
 		}
 	}
 
