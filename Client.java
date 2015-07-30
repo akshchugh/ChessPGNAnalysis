@@ -12,7 +12,9 @@ public class Client {
 			String string = scanner.nextLine();
 			String[] s = string.split(" ");
 			chess.nextMove(s[0], 'W');
-			chess.nextMove(s[1], 'B');
+			if (s.length > 1) {
+				chess.nextMove(s[1], 'B');
+			}
 		}
 		chess.displayBoard();
 	}
