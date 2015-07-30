@@ -1,13 +1,15 @@
 We use three classes
 
 Piece
-	char name
-	char colour
+	PieceName name - enum
+	PieceColor colour - enum
 Cell
 	Piece piece
 Chess 
 	Cell[][] grid
+	
 	initializeGrid()
-	maketMove(move_details, player)
-	updatePosition(move_details, player)
-	deletePreviousPosition(move_details, player)
+	preProcessData()
+	nextMove(move_details, player)
+	locateMovingPiece()
+	removePiece()
