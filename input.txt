@@ -21,8 +21,8 @@ Nbd2 Nxd6
 Nc4 Nxc4
 Bxc4 Nb6
 Ne5 Rae8
-Bxf7 Rxf7
-Nxf7 Rxe1
+Bxf7+ Rxf7
+Nxf7 Rxe1+
 Qxe1 Kxf7
 Qe3 Qg5
 Qxg5 hxg5
